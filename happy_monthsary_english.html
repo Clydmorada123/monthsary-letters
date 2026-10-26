@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Monthsary 💙</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#04122e;--bg2:#0b3a8f;--glow:#6cc4ff;--ink:#e8f4ff;--card:rgba(255,255,255,.08)}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--ink);background:radial-gradient(ellipse at 50% 0%,var(--bg2),var(--bg1) 70%) fixed;overflow-x:hidden;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:0}
+main{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:24px 18px 60px;text-align:center}
+h1{font-family:'Dancing Script',cursive,serif;font-size:2.6rem;text-shadow:0 0 20px var(--glow);margin-top:10px}
+.sub{font-weight:300;opacity:.85;margin-top:4px}
+.scene{height:300px;perspective:900px;margin:14px auto 0;cursor:pointer;position:relative}
+.rig{position:absolute;left:50%;bottom:20px;width:0;height:0;transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(var(--ry,0deg));animation:float 5s ease-in-out infinite}
+@keyframes float{50%{translate:0 -10px}}
+.petal{position:absolute;left:-32px;bottom:0;width:64px;height:165px;transform-origin:50% 100%;transform-style:preserve-3d;border-radius:50% 50% 50% 50%/88% 88% 12% 12%;background:linear-gradient(to top,#dff3ff 0%,#6cc4ff 30%,#2f7bff 75%,#1747c9 100%);box-shadow:inset 0 0 18px rgba(255,255,255,.55),0 0 22px rgba(80,170,255,.55);transition:transform 2.8s cubic-bezier(.2,.8,.2,1);backface-visibility:visible}
+.petal::after{content:"";position:absolute;left:50%;top:12%;bottom:10%;width:2px;background:rgba(255,255,255,.45);transform:translateX(-50%);border-radius:2px}
+.petal.in{width:54px;left:-27px;height:140px;background:linear-gradient(to top,#fff 0%,#9bd8ff 35%,#4a95ff 85%)}
+.stem{position:absolute;left:-4px;top:0;width:8px;height:150px;background:linear-gradient(#3aa0d8,#0e5a8a);border-radius:4px;transform:translateZ(-2px)}
+.stamen{position:absolute;left:-1px;bottom:0;width:2px;height:70px;background:#bfe6ff;transform-origin:50% 100%;transition:transform 2.8s .6s}
+.stamen::after{content:"";position:absolute;top:-6px;left:-4px;width:10px;height:10px;border-radius:50%;background:#cfefff;box-shadow:0 0 10px #fff}
+.hint{font-size:.85rem;opacity:.75;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.3}}
+button{font:inherit;cursor:pointer;border:0;color:#fff;border-radius:999px;padding:12px 26px;background:linear-gradient(135deg,#2f7bff,#6cc4ff);box-shadow:0 0 22px rgba(80,170,255,.6);transition:transform .2s,box-shadow .2s}
+button:hover{transform:translateY(-2px) scale(1.04)}
+.hidden{display:none!important}
+.card{background:var(--card);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(160,210,255,.35);border-radius:22px;padding:24px 20px;margin-top:22px;text-align:left;box-shadow:0 0 40px rgba(60,140,255,.25);animation:rise 1s both}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}}
+#letter{font-size:1rem;line-height:1.85;min-height:200px;white-space:pre-wrap}
+.caret::after{content:"▍";animation:pulse 1s infinite}
+h2{font-family:'Dancing Script',cursive,serif;font-size:1.8rem;text-align:center;margin-bottom:6px}
+.chips{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(160,210,255,.45);box-shadow:none;border-radius:16px;padding:12px 8px;font-size:.9rem}
+.chip.sel{background:linear-gradient(135deg,#2f7bff,#6cc4ff);box-shadow:0 0 20px rgba(108,196,255,.8)}
+.chip.wide{grid-column:1/-1}
+.custom{margin-top:6px}
+input{width:100%;font:inherit;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(160,210,255,.5);border-radius:14px;padding:11px 14px;margin-top:10px;color-scheme:dark}
+input::placeholder{color:rgba(232,244,255,.6)}
+.center{text-align:center;margin-top:16px}
+#end h1{font-size:3rem}
+.big{font-family:'Dancing Script',cursive,serif;font-size:3.4rem;color:#fff;text-shadow:0 0 25px #6cc4ff,0 0 50px #2f7bff;animation:beat 1.4s infinite}
+@keyframes beat{50%{transform:scale(1.08)}}
+.toast{font-size:.85rem;opacity:.8;margin-top:8px;line-height:1.6}
+.action-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}
+.action-row button{font-size:.9rem;padding:10px 16px}
+@media(max-width:380px){h1{font-size:2.25rem}.card{padding:20px 16px}.scene{height:270px}}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<main>
+  <section id="intro">
+    <h1>Happy Monthsary 💙</h1>
+    <p class="sub">I have a letter for you…</p>
+    <div class="scene" id="scene" aria-label="Animated blue lily">
+      <div class="rig" id="rig"></div>
+    </div>
+    <p class="hint" id="hint">Tap the lily to make it bloom 🌸</p>
+    <div class="center"><button id="open" class="hidden">Read the Letter 💌</button></div>
+  </section>
+
+  <section id="letterBox" class="card hidden">
+    <h2>A Letter for You, My Love 💙</h2>
+    <p id="letter" class="caret"></p>
+  </section>
+
+  <section id="pick" class="card hidden">
+    <h2>When Are You Available? 🗓️</h2>
+    <p class="sub" style="text-align:center">Choose a day next week for our belated monthsary date:</p>
+    <div class="chips" id="chips"></div>
+    <div id="customBox" class="custom hidden">
+      <p style="text-align:center;font-size:.9rem">That's okay! Choose a day that works best for you 💙</p>
+      <input type="date" id="cdate" aria-label="Choose a date">
+      <input type="text" id="cnote" placeholder="Time / activity you'd like to do (optional) ✍️">
+    </div>
+    <div class="center"><button id="confirm">Confirm My Choice ✨</button></div>
+  </section>
+
+  <section id="end" class="card hidden" style="text-align:center">
+    <h1>Yay! 🥹</h1>
+    <div style="margin:14px 0;padding:16px 12px;border-radius:18px;background:linear-gradient(135deg,#2f7bff,#6cc4ff);box-shadow:0 0 25px rgba(108,196,255,.7)">
+      <p style="font-size:.8rem;opacity:.9">💌 My Answer for Our Belated Monthsary Date</p>
+      <p id="result" style="margin:8px 0;font-size:1.25rem;font-weight:500"></p>
+      <p id="stamp" style="font-size:.75rem;opacity:.85"></p>
+    </div>
+    <p style="font-size:.95rem;margin-bottom:8px">📸 Take a screenshot of this and send it to your handsome boyfriend! 😘</p>
+    <p class="big">I love you 💙</p>
+    <p style="margin-top:8px;line-height:1.7">Thank you for this month together, and for all the many more months we'll share. I love you so much, now and always. 🌊🪷</p>
+    <div class="action-row">
+      <button id="copy">Copy My Response 💌</button>
+      <button id="share">Share My Response 💙</button>
+    </div>
+    <p class="toast" id="toast"></p>
+  </section>
+
+  <section id="inbox" class="card hidden">
+    <h2>💌 Their Responses</h2>
+    <div id="answers"><p class="toast">They haven't answered yet…</p></div>
+  </section>
+</main>
+
+<script>
+/* ===== YOU CAN EDIT THESE SETTINGS ===== */
+const HER_NAME = "Love";
+const MY_NAME  = "Ako";
+const LETTER =
+`Hi ${HER_NAME}, Happy Monthsary! 💙
+
+Una sa lahat gusto ko sabihin na love na love kita subra. Salamat sa lahat ng pagtitiis at pagmamahal mo sa akin. 
+Sorry sa mga pangangasar ko sayo at pang iinis ko sayo, pero mahal na mahal kita super. Supportahan kita sa mga bagay na gusto mo gawin lalo na sa pangarap mo love. 
+At Goodluck sa duty mo always mo galingan love proud na proud ako sayo. lagi mo tatandaan na andito lang ako para sayo, sa lahat ng bagay na kailangan mo ng suporta at pagmamahal. 
+At tska love pasensya na if di tayo makakapag date or celebrate ngayon love pasensya na talaga love wala kasi ako pera now pero babawi ako love magkaroon lang pera kahit ano gusto mo kainin.
+Thankyou love sa always pag unawa. Iloveyouusomuch love ko and 11th monthsary love :*
+
+
+
+
+
+Next week late date. 🌷`;
+/* ======================================= */
+
+const $ = id => document.getElementById(id);
+
+/* ----- Build the 3D lily ----- */
+const rig = $('rig');
+const petals = [];
+rig.insertAdjacentHTML('beforeend','<div class="stem"></div>');
+for(let i=0;i<6;i++){
+  const p=document.createElement('div');
+  p.className='petal'+(i%2?' in':'');
+  p.dataset.a=i*60;
+  p.style.transform=`rotateY(${p.dataset.a}deg) rotateX(4deg)`;
+  rig.appendChild(p);
+  petals.push(p);
+}
+const stam=[];
+for(let i=0;i<5;i++){
+  const s=document.createElement('div');
+  s.className='stamen';
+  s.dataset.a=i*72;
+  s.style.transform=`rotateY(${s.dataset.a}deg) rotateX(2deg)`;
+  rig.appendChild(s);
+  stam.push(s);
+}
+let opened=false;
+function bloom(){
+  if(opened)return;
+  opened=true;
+  petals.forEach((p,i)=>{
+    p.style.transitionDelay=(i*0.12)+'s';
+    p.style.transform=`rotateY(${p.dataset.a}deg) rotateX(${i%2?52:68}deg)`;
+  });
+  stam.forEach(s=>s.style.transform=`rotateY(${s.dataset.a}deg) rotateX(28deg)`);
+  $('hint').classList.add('hidden');
+  setTimeout(()=>$('open').classList.remove('hidden'),2200);
+  burst();
+}
+$('scene').addEventListener('click',bloom);
+setTimeout(bloom,1800);
+
+/* Spin and tilt with the pointer */
+let ry=0,drag=false,sx=0;
+setInterval(()=>{if(!drag){ry+=.35;rig.style.setProperty('--ry',ry+'deg')}},30);
+$('scene').addEventListener('pointerdown',e=>{drag=true;sx=e.clientX});
+addEventListener('pointerup',()=>drag=false);
+addEventListener('pointermove',e=>{
+  if(drag){ry+=(e.clientX-sx)*.6;sx=e.clientX;rig.style.setProperty('--ry',ry+'deg')}
+});
+
+/* ----- Sparkles and falling petals ----- */
+const cv=$('fx'),cx=cv.getContext('2d');
+let W,H,parts=[];
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+addEventListener('resize',size);size();
+function spawn(x,y,burstMode){
+  parts.push({
+    x,y,r:Math.random()*3+1,
+    vx:burstMode?(Math.random()-.5)*7:(Math.random()-.5)*.4,
+    vy:burstMode?(Math.random()-.8)*6:-(Math.random()*.6+.2),
+    life:burstMode?90:600,a:Math.random()*6
+  });
+}
+function burst(){for(let i=0;i<60;i++)spawn(W/2,H*.35,true)}
+function loop(){
+  cx.clearRect(0,0,W,H);
+  if(Math.random()<.25)spawn(Math.random()*W,H+10,false);
+  parts=parts.filter(p=>p.life>0&&p.y>-20);
+  for(const p of parts){
+    p.x+=p.vx+Math.sin(p.a+=.03)*.3;
+    p.y+=p.vy;p.life--;
+    if(p.vx>1||p.vx<-1)p.vy+=.08;
+    cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(150,215,255,${Math.min(1,p.life/60)*.85})`;
+    cx.shadowColor='#6cc4ff';cx.shadowBlur=12;cx.fill();
+  }
+  requestAnimationFrame(loop);
+}
+loop();
+
+/* ----- Letter typewriter ----- */
+function type(){
+  const el=$('letter');
+  let i=0;
+  (function t(){
+    el.textContent=LETTER.slice(0,i++);
+    if(i<=LETTER.length)setTimeout(t,28);
+    else{el.classList.remove('caret');setTimeout(showPick,700)}
+  })();
+}
+$('open').addEventListener('click',()=>{
+  $('letterBox').classList.remove('hidden');
+  $('open').classList.add('hidden');
+  $('letterBox').scrollIntoView({behavior:'smooth'});
+  type();
+});
+
+/* ----- Date choices: next week, calculated from today ----- */
+let choice=null,custom=false;
+function showPick(){
+  $('pick').classList.remove('hidden');
+  $('pick').scrollIntoView({behavior:'smooth',block:'center'});
+}
+(function build(){
+  const now=new Date();
+  const toMon=((8-now.getDay())%7)||7;
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const mon=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const box=$('chips');
+  for(let i=0;i<7;i++){
+    const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+toMon+i);
+    const b=document.createElement('button');
+    b.className='chip';
+    b.textContent=`${days[d.getDay()]}, ${mon[d.getMonth()]} ${d.getDate()}`;
+    b.onclick=()=>select(b,b.textContent,false);
+    box.appendChild(b);
+  }
+  const n=document.createElement('button');
+  n.className='chip wide';
+  n.textContent="None of These Work for Me 😅 (I'll Choose)";
+  n.onclick=()=>select(n,'',true);
+  box.appendChild(n);
+})();
+function select(btn,text,isCustom){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  btn.classList.add('sel');
+  choice=text;
+  custom=isCustom;
+  $('customBox').classList.toggle('hidden',!isCustom);
+}
+
+let finalText='';
+const RESULTS_URL='https://claude.ai/artifact/XPCfpqcuMpzHvAoSGm7vV6';
+function makeLink(when,isCustom){
+  const j=JSON.stringify({w:when,c:isCustom?1:0,t:Date.now()});
+  const tok=btoa(unescape(encodeURIComponent(j))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  finalText=`Hi ${MY_NAME}! I'm available on ${when} for our belated monthsary date 💙 Here's my response: ${RESULTS_URL}#${tok} I love you!`;
+}
+
+/* Optional Claude artifact database integration. This only works in an environment
+   that provides the Claude artifact APIs; a normal local HTML file uses the fallback. */
+let dbRef=null;
+(async()=>{
+  try{
+    if(typeof claude==='undefined')return;
+    dbRef=await claude.use('db');
+    const user=await claude.use('user');
+    if(dbRef&&user&&user.isOwner()){
+      $('inbox').classList.remove('hidden');
+      dbRef.collection('responses').orderBy('at','desc').onSnapshot(snap=>{
+        const box=$('answers');box.textContent='';
+        if(snap.empty){box.innerHTML='<p class="toast">They haven\'t answered yet…</p>';return}
+        snap.forEach(d=>{
+          const r=d.data(),p=document.createElement('p');
+          p.style.cssText='margin:10px 0;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.1)';
+          p.textContent=`💙 ${r.when}${r.custom?' (custom choice)':''} · ${new Date(r.at).toLocaleString('en-US')}`;
+          box.appendChild(p);
+        });
+      },()=>{});
+    }
+  }catch(e){dbRef=null}
+})();
+async function saveAnswer(when,isCustom){
+  try{
+    if(typeof claude==='undefined')throw new Error('Database integration unavailable');
+    if(!dbRef)dbRef=await claude.use('db');
+    if(!dbRef)throw new Error('Database unavailable');
+    await dbRef.collection('responses').add({when,custom:isCustom,at:Date.now()});
+    $('toast').textContent='Your answer has been sent 💙';
+  }catch(e){
+    $('toast').textContent='Automatic sending is unavailable here. Copy or share your response and send it to them 💙';
+  }
+}
+$('confirm').addEventListener('click',()=>{
+  let when=choice;
+  if(custom){
+    const v=$('cdate').value,note=$('cnote').value.trim();
+    if(!v){alert('Please choose a date first 💙');return}
+    const d=new Date(v+'T00:00');
+    when=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+(note?` (${note})`:'');
+  }
+  if(!when){alert('Please choose a day first 💙');return}
+  finalText=`Hi ${MY_NAME}! I'm available on ${when} for our belated monthsary date 💙 I love you!`;
+  makeLink(when,custom);
+  $('stamp').textContent='Answered on '+new Date().toLocaleString('en-US');
+  $('result').textContent=`Our date: ${when} 🗓️💙`;
+  $('pick').classList.add('hidden');
+  $('end').classList.remove('hidden');
+  $('end').scrollIntoView({behavior:'smooth'});
+  for(let k=0;k<4;k++)setTimeout(burst,k*500);
+  saveAnswer(when,custom);
+});
+$('copy').addEventListener('click',async()=>{
+  try{
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(finalText);
+      $('toast').textContent='Copied! Paste it into your chat 💙';
+    }else{
+      const ta=document.createElement('textarea');
+      ta.value=finalText;document.body.appendChild(ta);ta.select();
+      const ok=document.execCommand('copy');ta.remove();
+      $('toast').textContent=ok?'Copied! Paste it into your chat 💙':'Please select and copy the response text manually: '+finalText;
+    }
+  }catch(e){$('toast').textContent='Copy this and send it to them: '+finalText}
+});
+$('share').addEventListener('click',async()=>{
+  try{
+    if(navigator.share){await navigator.share({text:finalText});}
+    else if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(finalText);
+      $('toast').textContent='Sharing is not supported here, so your response was copied 💙';
+    }else{
+      $('toast').textContent=finalText;
+    }
+  }catch(e){
+    if(e.name!=='AbortError')$('toast').textContent='You can copy and send this: '+finalText;
+  }
+});
+</script>
+</body>
+</html>
